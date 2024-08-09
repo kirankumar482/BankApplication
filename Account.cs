@@ -3,13 +3,16 @@ public class Account
 {
     // Auto-implemented properties
     public string Id { get; private set; }
+    public string Password { get; private set; }
+    public string Title { get; private set; }
     public string Name { get; private set; }
     public int Balance { get; private set; }
 
     // Constructor
-    public Account(string id, string name, int balance)
+    public Account(string id, string password, string name, int balance)
     {
         Id = id;
+        Password=password;
         Name = name;
         Balance = balance;
     }

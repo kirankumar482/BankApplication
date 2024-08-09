@@ -12,15 +12,15 @@ public class BankApplication
 
         string id;
         string name;
+        string password,confirmPassword;
         int balance;
         Account acc;
         bool exit = false;
         do
         {
-            Console.WriteLine("0: create");
-            Console.WriteLine("1: access");
-            Console.WriteLine("2: accounts");
-            Console.WriteLine("3: Exit");
+            Console.WriteLine("0: Create an Account");
+            Console.WriteLine("1: Access Your account");
+            Console.WriteLine("2: Exit");
 
             Console.WriteLine("Enter choice");
             int choice = int.Parse(Console.ReadLine());
@@ -30,61 +30,88 @@ public class BankApplication
                     Console.WriteLine("Enter account name:");
                     name = Console.ReadLine();
 
+                    Console.WriteLine("Enter password:");
+                    password = Console.ReadLine();
+                    Console.WriteLine("Enter Your password Again:");
+                    confirmPassword = Console.ReadLine();  
+
                     Console.WriteLine("Enter initial balance:");
                     balance = int.Parse(Console.ReadLine());
 
                     id = name + balance.ToString();
 
-                    acc = new Account(id, name, balance);
-                    accounts.Add(acc);
-                    Console.WriteLine($"Account created {id}");
+                    if(password.Equals(confirmPassword))
+                    {
+                        acc = new Account(id, password, name, balance);
+                        accounts.Add(acc);
+                        Console.WriteLine($"Account created {id}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Account Not created!! \nPasswords Not same");
+                    }
                     break;
 
                 case 1:
                     // Access Account
                     Console.WriteLine("Enter account ID:");
                     id = Console.ReadLine();
-
-                    acc = accounts.FindLast( x => x.Id.Equals(id) );
+                    acc = accounts.FindLast(x => x.Id.Equals(id));
 
                     if (acc != null)
                     {
-                        Console.WriteLine("\nAccount Options:");
-                        Console.WriteLine("1. Deposit");
-                        Console.WriteLine("2. Withdraw");
-                        Console.WriteLine("3. Back");
+                        Console.WriteLine("Enter Your Password:");
+                        password = Console.ReadLine();
 
-                        bool keepGoing = true; // Flag to control the account options loop
-
-                        while (keepGoing)
+                        if (acc.Password.Equals(password))
                         {
-                            Console.Write("Enter your choice: ");
-                            int subChoice = int.Parse(Console.ReadLine());
+                            Console.WriteLine("\nAccount Options:");
+                            Console.WriteLine("1. Deposit");
+                            Console.WriteLine("2. Withdraw");
+                            Console.WriteLine("3. Check Balance");
+                            Console.WriteLine("4. Back");
 
-                            switch (subChoice)
+                            bool keepGoing = true; // Flag to control the account options loop
+
+                            while (keepGoing)
                             {
-                                case 1: // Deposit
-                                    Console.WriteLine("Enter amount to deposit:");
-                                    int depositAmount = int.Parse(Console.ReadLine());
-                                    acc.Deposit(depositAmount);
-                                    break;
+                                Console.Write("Enter your choice: ");
+                                int subChoice = int.Parse(Console.ReadLine());
 
-                                case 2: // Withdraw
-                                    Console.WriteLine("Enter amount to withdraw:");
-                                    int withdrawAmount = int.Parse(Console.ReadLine());
-                                    acc.Withdraw(withdrawAmount);
-                                    break;
+                                switch (subChoice)
+                                {
+                                    case 1: // Deposit
+                                        Console.WriteLine("Enter amount to deposit:");
+                                        int depositAmount = int.Parse(Console.ReadLine());
+                                        acc.Deposit(depositAmount);
+                                        break;
 
-                                case 3: // Back to main menu
-                                    Console.WriteLine("Exiting account options...");
-                                    keepGoing = false; // Exit the loop
-                                    break;
+                                    case 2: // Withdraw
+                                        Console.WriteLine("Enter amount to withdraw:");
+                                        int withdrawAmount = int.Parse(Console.ReadLine());
+                                        acc.Withdraw(withdrawAmount);
+                                        break;
 
-                                default:
-                                    Console.WriteLine("Invalid choice.");
-                                    break;
+                                    case 3: // Withdraw
+                                        Console.WriteLine($"The balance amount: ${acc.Balance}");
+                                        break;
+
+                                    case 4: // Back to main menu
+                                        Console.WriteLine("Exiting account options...");
+                                        keepGoing = false; // Exit the loop
+                                        break;
+
+                                    default:
+                                        Console.WriteLine("Invalid choice.");
+                                        break;
+                                }
                             }
                         }
+                        else
+                        {
+                            Console.WriteLine("Invalid Password");
+                        }
+
                     }
                     else
                     {
@@ -93,10 +120,6 @@ public class BankApplication
                     break;
 
                 case 2:
-                    accounts.ForEach(x => Console.WriteLine(x));
-                    break;
-
-                case 3:
                     exit=true;
                     break;
 
@@ -105,9 +128,6 @@ public class BankApplication
                     break;
             }
         }while (!exit);
-        
-
-       
        
     }
 }

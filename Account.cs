@@ -1,27 +1,50 @@
 ﻿namespace bankapp;
-
 public class Account
 {
-	private string id;
-	private string name;
-	private int balance;
+    // Auto-implemented properties
+    public string Id { get; private set; }
+    public string Name { get; private set; }
+    public int Balance { get; private set; }
 
-	public Account(string id,string name,int balance)
-	{
-		this.id = id;
-		this.name = name;
-		this.balance = balance;
-	}
+    // Constructor
+    public Account(string id, string name, int balance)
+    {
+        Id = id;
+        Name = name;
+        Balance = balance;
+    }
 
-    //withdraw 
+    // Withdraw method
+    public void Withdraw(int amount)
+    {
+        if (amount > 0 && amount <= Balance)
+        {
+            Balance -= amount;
+            Console.WriteLine($"Withdrew ${amount}. New balance: ${Balance}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid withdrawal amount.");
+        }
+    }
 
+    // Deposit method
+    public void Deposit(int amount)
+    {
+        if (amount > 0)
+        {
+            Balance += amount;
+            Console.WriteLine($"Deposited ${amount}. New balance: ${Balance}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid deposit amount.");
+        }
+    }
 
-    //deposit
-
-
-    //balance
-
-
-    //getters and setters
-
+    // ToString override
+    public override string ToString()
+    {
+        return $"Account ID: {Id}, Name: {Name}, Balance: ${Balance}";
+    }
 }

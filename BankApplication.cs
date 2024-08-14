@@ -14,6 +14,7 @@ public class BankApplication
         string name;
         string password,confirmPassword;
         int balance;
+        int age;
         Account acc;
         bool exit = false;
         do
@@ -38,13 +39,25 @@ public class BankApplication
                     Console.WriteLine("Enter initial balance:");
                     balance = int.Parse(Console.ReadLine());
 
+                    Console.WriteLine("Enter your age:");
+                    age = int.Parse(Console.ReadLine());
+
+
+
                     id = name + balance.ToString();
 
-                    if(password.Equals(confirmPassword))
+                    if (password.Equals(confirmPassword))
                     {
-                        acc = new Account(id, password, name, balance);
-                        accounts.Add(acc);
-                        Console.WriteLine($"Account created {id}");
+                        if (age > 18)
+                        {
+                            acc = new Account(id, password, name, balance, age);
+                            accounts.Add(acc);
+                            Console.WriteLine($"Account created {id}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Age constraint is not satisfied");
+                        }
                     }
                     else
                     {

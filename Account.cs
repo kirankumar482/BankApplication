@@ -8,13 +8,16 @@ public class Account
     public string Name { get; private set; }
     public int Balance { get; private set; }
 
+    public int Age { get; private set; }
+
     // Constructor
-    public Account(string id, string password, string name, int balance)
+    public Account(string id, string password, string name, int balance, int age)
     {
         Id = id;
         Password=password;
         Name = name;
         Balance = balance;
+        Age = age;
     }
 
     // Withdraw method
